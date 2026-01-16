@@ -1,0 +1,2100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethio Page Library</title>
+    <style>
+        /* Base styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            transition: background-color 0.3s ease, color 0.3s ease, font-size 0.3s ease, font-family 0.3s ease;
+            margin-bottom: 80px; /* Footer height */
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        header {
+            background-color: #E91111;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        header.dark-mode {
+            background-color: #292929;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        /* Navigation links */
+        nav ul li a {
+            color: white; /* የጽሁፍ ቀለምን ወደ ነጭ ይለውጣል */
+            text-decoration: none;
+            transition: font-weight 0.3s ease, color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #42445A; /* hover ሲደረግ ቀለሙን ወደ ጥቁር እንዲሆን ያደርጋል */
+            font-weight: bold;
+        }
+
+        /* Modern search bar and filter styles for mobile */
+        .search-container {
+            display: flex;
+            flex-direction: column; /* Stack search bar and filter for mobile */
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            gap: 10px;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #ddd;
+        }
+
+        body.dark-mode .search-container {
+            background-color: #1c1c1c;
+            border-bottom: 1px solid #333;
+        }
+
+        .search-bar {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            padding-right: 50px;
+            font-size: 16px;
+            border-radius: 25px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            color: #333;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box; /* Ensures padding doesn't affect width */
+        }
+
+        body.dark-mode .search-bar input {
+            background-color: #333;
+            color: #e0e0e0;
+            border-color: #555;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: #E91111;
+            box-shadow: 0 0 8px rgba(233, 17, 17, 0.4);
+        }
+
+        .search-bar button {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 20px;
+            border: none;
+            background-color: #E91111;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        body.dark-mode .search-bar button {
+            background-color: #A24A4A;
+        }
+
+        .search-bar button:hover {
+            background-color: #D32F2F;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .category-filter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .category-filter label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #555;
+            flex-shrink: 0;
+        }
+
+        body.dark-mode .category-filter label {
+            color: #ccc;
+        }
+
+        .category-filter select {
+            width: 100%;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 25px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            color: #333;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23E91111%22%20d%3D%22M287%20194.2c-3.2%203.2-7.3%204.9-11.4%204.9s-8.2-1.7-11.4-4.9L146.2%2090.8%2028.6%20194.2c-3.2%203.2-7.3%204.9-11.4%204.9s-8.2-1.7-11.4-4.9c-6.2-6.2-6.2-16.4%200-22.6L135.2%2064.4c6.2-6.2%2016.4-6.2%2022.6%200l122.4%20107.2c6.2%206.2%206.2%2016.4%200%2022.6z%22%2F%3E%3C%2Fsvg%3E');
+            background-size: 10px;
+            background-position: right 15px center;
+            background-repeat: no-repeat;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        body.dark-mode .category-filter select {
+            background-color: #333;
+            color: #e0e0e0;
+            border-color: #555;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%20194.2c-3.2%203.2-7.3%204.9-11.4%204.9s-8.2-1.7-11.4-4.9L146.2%2090.8%2028.6%20194.2c-3.2%203.2-7.3%204.9-11.4%204.9s-8.2-1.7-11.4-4.9c-6.2-6.2-6.2-16.4%200-22.6L135.2%2064.4c6.2-6.2%2016.4-6.2%2022.6%200l122.4%20107.2c6.2%206.2%206.2%2016.4%200%2022.6z%22%2F%3E%3C%2Fsvg%3E');
+        }
+
+        .category-filter select:focus {
+            outline: none;
+            border-color: #E91111;
+            box-shadow: 0 0 8px rgba(233, 17, 17, 0.4);
+        }
+        /* End of search bar and filter styles */
+
+        /* Advertisements Styles */
+        #advertisements-section {
+            padding: 15px;
+            margin: 15px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+            cursor: grab;
+            user-select: none; /* Prevent text selection on swipe */
+        }
+
+        body.dark-mode #advertisements-section {
+            background-color: #1c1c1c;
+            box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1);
+        }
+
+        #advertisements-section h2 {
+            color: #888;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        #advertisements-container {
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            width: 100%;
+        }
+
+        #advertisements-container img {
+            flex: 0 0 100%;
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 0 5px; /* Add margin to fix spacing issue */
+            padding: 0;
+        }
+
+        #advertisements-dots {
+            text-align: center;
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .advertisement-bar-container {
+            width: 30px; /* Reduced width */
+            height: 3px; /* Reduced height */
+            background-color: #ccc;
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        body.dark-mode .advertisement-bar-container {
+            background-color: #444;
+        }
+
+        .advertisement-bar {
+            width: 0%;
+            height: 100%;
+            background-color: #E91111;
+            transition: width 0.1s linear; /* Animation speed for the bar fill */
+        }
+
+        .advertisement-bar.active {
+            animation: fillBar 5s linear forwards;
+        }
+
+        @keyframes fillBar {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* New Arrivals Styles */
+        #new-arrivals {
+            padding: 15px;
+            margin: 15px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            position: relative;
+            display: none;
+        }
+
+        #new-arrivals.dark-mode {
+            background-color: #1c1c1c;
+            box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1);
+        }
+
+        #new-arrivals h2 {
+            color: #888;
+            margin-bottom: 10px;
+            text-align: center;
+            padding-left: 0;
+            font-size: 1.2em;
+        }
+
+        .new-arrivals-list {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding-bottom: 15px;
+            border-radius: 8px;
+        }
+
+        .new-arrivals-list.dark-mode {
+            background-color: #222;
+        }
+
+        .new-arrivals-list .book {
+            flex: 0 0 auto;
+            width: 100px;
+            border: 1px solid #ddd;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #fff;
+            text-align: center;
+            transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .new-arrivals-list .book.dark-mode {
+            border-color: #555;
+            background-color: #333;
+            color: #e0e0e0;
+        }
+
+        .new-arrivals-list .book img {
+            max-width: 50px;
+            height: auto;
+            border-radius: 6px;
+            margin-bottom: 5px;
+        }
+
+        .new-arrivals-list .book h3 {
+            margin: 3px 0;
+            font-size: 0.7em;
+            color: #333;
+            transition: color 0.3s ease;
+            word-wrap: break-word;
+        }
+
+        .new-arrivals-list .book.dark-mode h3 {
+            color: #e0e0e0;
+        }
+
+        .new-arrivals-list .book.new::before {
+            content: 'አዲስ';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background-color: rgba(255, 255, 0, 0.9);
+            color: #333;
+            font-size: 0.7em;
+            padding: 3px;
+            border-radius: 3px;
+            z-index: 1;
+        }
+
+        .new-arrivals-list .book.new.dark-mode::before {
+            background-color: rgba(0, 0, 0, 0.9);
+            color: #f4f4f4;
+        }
+
+        section {
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        section.dark-mode {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .book-list-group {
+            margin-bottom: 20px;
+        }
+
+        .book-list-group h2 {
+            color: #E91111;
+            margin-bottom: 10px;
+        }
+
+        .book-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            justify-content: flex-start;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .book-list.dark-mode {
+            background-color: #000;
+            color: #000;
+        }
+
+        .book-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: transparent;
+            box-sizing: border-box;
+            display: flex;
+            align-items: flex-start;
+            text-align: left;
+            transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .book-item.dark-mode {
+            border-color: #555;
+            background-color: #000;
+            color: #000;
+        }
+
+        .book-item img {
+            max-width: 80px;
+            height: auto;
+            border-radius: 8px;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .book-info {
+            flex-grow: 1;
+        }
+
+        .book-info h3 {
+            margin: 0 0 5px 0;
+            font-size: 16px;
+            color: #333;
+            transition: color 0.3s ease;
+            font-weight: bold;
+        }
+
+        .book-item.dark-mode .book-info h3 {
+            color: #000;
+        }
+
+        .book-info p {
+            margin: 0;
+            font-size: 14px;
+            color: #777;
+            transition: color 0.3s ease;
+            line-height: 1.4;
+        }
+
+        .book-item.dark-mode .book-info p {
+            color: #000;
+        }
+
+        button {
+            background-color: #940000;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        button.dark-mode {
+            background-color: #444;
+            color: #f4f4f4;
+        }
+
+        button:hover {
+            background-color: #828282;
+            color: #000000;
+        }
+
+        button.dark-mode:hover {
+            background-color: #666;
+            color: #ccc;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #E91111;
+            color: white;
+            width: 100%;
+            box-sizing: border-box;
+            position: fixed;
+            bottom: 0;
+            height: 80px;
+            font-size: 14px !important;
+        }
+
+        footer.dark-mode {
+            background-color: #292929;
+        }
+
+        footer .category-links {
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        footer .category-links ul {
+            display: flex;
+            padding: 0;
+            margin: 5px;
+            list-style: none;
+            justify-content: flex-start;
+            padding-left: 20px;
+        }
+
+        footer .category-links ul li {
+            margin-right: 10px;
+        }
+
+        footer .category-links ul li:first-child {
+            margin-left: 0;
+        }
+
+        footer .category-links ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .no-book-message {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #888;
+            margin-top: 20px;
+            display: none;
+            transition: color 0.3s ease;
+        }
+
+        .no-book-message.dark-mode {
+            color: #a0a0a0;
+        }
+
+        /* Splash Screen Styles */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        body.dark-mode #splash-screen {
+            background-color: #121212;
+        }
+
+        #splash-screen img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .loading-progress {
+            width: 80px;
+            height: 8px;
+            background-color: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        body.dark-mode .loading-progress {
+            background-color: #333;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: red;
+            border-radius: 4px;
+            animation: progress 3s linear forwards;
+        }
+
+        @keyframes progress {
+            0% {
+                width: 0%;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 700px;
+            border-radius: 12px;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 30px;
+            text-align: left;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-content.dark-mode {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            border-color: #555;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-content img {
+            max-width: 250px;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-content > div {
+            flex-grow: 1;
+        }
+
+        .modal-content h2 {
+            color: #000000;
+            margin-top: 0;
+            margin-bottom: 10px;
+            text-align: left;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .modal-content.dark-mode h2 {
+            color: #FDFDFF;
+        }
+
+        .modal-content strong {
+            font-weight: bold;
+            color: #333;
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+
+        .modal-content.dark-mode strong {
+            color: #f0f0f0;
+        }
+
+        .modal-content p {
+            text-align: left;
+            line-height: 1.7;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            font-size: 1em;
+            color: #666;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .modal-content.dark-mode p {
+            color: #ccc;
+        }
+
+        .modal-content button {
+            margin-top: 20px;
+            padding: 12px 20px;
+            font-size: 1em;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #940000;
+            color: white;
+            border: none;
+            transition: background-color 0.3s ease;
+            margin-right: 5px;
+        }
+
+        .modal-content.dark-mode button {
+            background-color: #444;
+            color: #f4f4f4;
+        }
+
+        .modal-content button:hover {
+            background-color: #828282;
+            color: #000000;
+        }
+
+        .modal-content.dark-mode button:hover {
+            background-color: #666;
+            color: #ccc;
+        }
+
+        .modal-content .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+            line-height: 1;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-content .close:hover {
+            opacity: 1;
+        }
+
+        .modal-content.dark-mode .close {
+            color: #e0e0e0;
+        }
+
+        /* Settings Page Styles */
+        #settings {
+            background-color: #fff3e0;
+            padding: 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            display: none;
+        }
+
+        #settings.dark-mode {
+            background-color: #332c26;
+            color: #e0e0e0;
+        }
+
+        #settings label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        #settings.dark-mode label {
+            color: #e0e0e0;
+        }
+
+        #settings select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: white;
+            color: #333;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        #settings.dark-mode select {
+            background-color: #333;
+            color: #e0e0e0;
+            border-color: #555;
+        }
+
+        ul {
+            float: left;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        ul li {
+            list-style: none;
+            margin-left: 12px;
+            margin-top: 0px;
+            font-size: 14px;
+        }
+
+        ul li a {
+            text-decoration: none;
+            color: #FFFFFF;
+            font-family: Arial;
+            font-weight: bold;
+            transition: 0.4s ease-in-out;
+        }
+
+        ul li a:hover {
+            color: #42445A;
+        }
+
+        .ulpl {
+            margin-left: 20px;
+        }
+
+        #settings select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: white;
+            color: #333;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        #settings.dark-mode select {
+            background-color: #333;
+            color: #e0e0e0;
+            border-color: #555;
+        }
+
+        /* Amharic Font Family */
+        body.amharic {
+            font-family: 'Abyssinica SIL', 'Noto Sans Ethiopic', sans-serif;
+            text-align: left;
+        }
+
+        /* English Font Family */
+        body.english {
+            font-family: Arial, sans-serif;
+            text-align: left;
+        }
+
+        /* Ensure text doesn't overflow */
+        h1, h2, h3, p, a {
+            word-wrap: break-word;
+        }
+
+        #settings {
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        #settings.dark-mode {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        #settings h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #E91111;
+        }
+
+        #settings label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        #settings.dark-mode label {
+            color: #e0e0e0;
+        }
+
+        #settings select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: white;
+            color: #333;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        #settings.dark-mode select {
+            background-color: #333;
+            color: #e0e0e0;
+            border-color: #555;
+        }
+
+        /* About Page Styles */
+        #about-page {
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            display: none;
+        }
+
+        #about-page.dark-mode {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        #about-page h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #E91111;
+        }
+
+        #about-page h3 {
+            font-size: 20px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #E91111;
+        }
+
+        #about-page p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        #about-page a {
+            color: #E91111;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #about-page a:hover {
+            text-decoration: underline;
+        }
+
+        /* Original book list style */
+        #originalBookList {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: flex-start;
+            margin: 20px;
+        }
+
+        #originalBookList .book-item-original {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: transparent;
+            width: calc(50% - 20px);
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        #originalBookList .book-item-original img {
+            max-width: 70%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        #originalBookList .book-item-original h3 {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        #searchResultsContainer {
+            display: none;
+            margin: 20px;
+        }
+        
+        /* --- AI Chatbot Styles --- */
+
+        #aiButton {
+            position: fixed;
+            top: 20px;
+            left: 20px; /* ቦታውን ወደ ግራ ቀይረነዋል */
+            padding: 10px 15px;
+            background-color: #007bff; /* ሰማያዊ ቀለም ለአዝራሩ */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        #aiButton:hover {
+            background-color: #0056b3;
+        }
+
+        body.dark-mode #aiButton {
+            background-color: #4CAF50; /* በጨለማ ሁነታ የተለየ ቀለም */
+        }
+
+        body.dark-mode #aiButton:hover {
+            background-color: #388E3C;
+        }
+
+        .ai-chat-window {
+            position: fixed;
+            top: 70px;
+            left: 20px;
+            width: 300px;
+            height: 400px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            z-index: 998;
+            transition: background-color 0.3s ease;
+        }
+
+        .ai-chat-window.hidden {
+            display: none !important;
+        }
+
+        body.dark-mode .ai-chat-window {
+            background-color: #292929;
+            border-color: #444;
+            color: #e0e0e0;
+        }
+
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        body.dark-mode .chat-header {
+            border-bottom: 1px solid #444;
+        }
+
+        .chat-header h3 {
+            margin: 0;
+            color: #007bff;
+            font-size: 1.1em;
+        }
+
+        body.dark-mode .chat-header h3 {
+            color: #4CAF50;
+        }
+
+        .chat-header .close-chat {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            color: #888;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        body.dark-mode .chat-header .close-chat {
+            color: #ccc;
+        }
+
+        .chat-output {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #eee;
+            background-color: #f4f4f4;
+            border-radius: 5px;
+        }
+
+        body.dark-mode .chat-output {
+            background-color: #1c1c1c;
+            border-color: #333;
+        }
+
+        .chat-output p {
+            margin: 5px 0;
+            line-height: 1.4;
+        }
+
+        .ai-message {
+            text-align: left;
+            color: #0056b3;
+        }
+
+        .user-message {
+            text-align: right;
+            color: #940000;
+        }
+
+        body.dark-mode .ai-message {
+            color: #4CAF50;
+        }
+
+        body.dark-mode .user-message {
+            color: #ff9800;
+        }
+
+
+        .chat-input-container {
+            display: flex;
+            gap: 5px;
+        }
+
+        #userInput {
+            flex-grow: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body.dark-mode #userInput {
+            background-color: #333;
+            color: #e0e0e0;
+            border-color: #555;
+        }
+
+        .chat-input-container button {
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .chat-input-container button:hover {
+            background-color: #0056b3;
+        }
+
+        body.dark-mode .chat-input-container button {
+            background-color: #4CAF50;
+        }
+
+        body.dark-mode .chat-input-container button:hover {
+            background-color: #388E3C;
+        }
+    </style>
+</head>
+<body>
+    <div id="splash-screen">
+        <img src="https://i.ibb.co/ynyHtPNR/Logo.jpg" alt="Logo">
+        <div class="loading-progress">
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+    <header>
+        <h1>Ethio Page Library</h1>
+        <nav>
+            <ul>
+                <li><a href="#home" id="homeLink">Home</a></li>
+                <li><a href="#settings" id="settingsLink">Settings</a></li>
+                <li><a href="#about" id="aboutLink">About</a></li>
+            </ul>
+        </nav>
+        <button id="aiButton" onclick="toggleAIChat()">AI</button>
+    </header>
+
+    <div class="search-container">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search books...">
+            <button onclick="searchBooks()">Search</button>
+        </div>
+        <div class="category-filter">
+            <label for="categorySelect">Filter by Category:</label>
+            <select id="categorySelect" onchange="filterByCategory()">
+                <option value="all">All</option>
+                <option value="children-s-books">Children's Books</option>
+                <option value="computing-internet">Computing & internet</option>
+                <option value="education-studies-teaching">Education Studies & Teaching</option>
+                <option value="food-drink">Food & Drink</option>
+                <option value="health-life-style">Health & Life style</option>
+                <option value="family">family</option>
+                <option value="art-photography">Art & Photography</option>
+                <option value="comic">comic</option>
+                <option value="crafts">crafts</option>
+                <option value="how-to">How-to</option>
+                <option value="law">Law</option>
+                <option value="physics">Physics</option>
+                <option value="technology">Technology</option>
+                <option value="business">Business</option>
+                <option value="other">other</option>
+            </select>
+        </div>
+    </div>
+
+    <section id="home" style="opacity: 0; transition: opacity 0.5s ease-in-out;">
+        <section id="advertisements-section">
+            <h2>ማስታወቂያ</h2>
+            <div id="advertisements-container">
+            </div>
+            <div id="advertisements-dots">
+            </div>
+        </section>
+
+        <section id="new-arrivals" style="display: none;">
+            <h2>&#10094; New Book &#10095;</h2>
+            <div class="new-arrivals-list">
+            </div>
+        </section>
+
+        <div id="originalBookList">
+            <h2>Other Books</h2>
+        </div>
+
+        <div id="bookGroupsContainer">
+        </div>
+
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <p id="noBookMessage" class="no-book-message">No Book</p>
+    </section>
+
+    <section id="searchResultsContainer">
+        <h2>Search Results</h2>
+        <div id="searchResultsList" class="book-list"></div>
+        <p id="noSearchResultMessage" class="no-book-message">No results found.</p>
+    </section>
+
+    <section id="settings" style="display: none;">
+        <h2>Settings</h2>
+        <div>
+            <label for="theme">Theme:</label>
+            <select id="theme">
+                <option value="light">Light Mode</option>
+                <option value="dark">Dark Mode</option>
+                <option value="auto">Auto Mode</option>
+            </select>
+        </div>
+        <div>
+            <label for="language">Language:</label>
+            <select id="language">
+                <option value="en">English</option>
+                <option value="am">አማርኛ</option>
+            </select>
+        </div>
+        <div>
+            <label for="fontSize">Font Size:</label>
+            <select id="fontSize">
+                <option value="14px">Small</option>
+                <option value="16px" selected>Medium</option>
+                <option value="18px">Large</option>
+            </select>
+        </div>
+        <div>
+            <label for="fontFamily">Font Family:</label>
+            <select id="fontFamily">
+                <option value="Arial, sans-serif" selected>Arial</option>
+                <option value="'Times New Roman', serif">Times New Roman</option>
+                <option value="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Segoe UI</option>
+            </select>
+        </div>
+    </section>
+
+    <section id="about-page" style="display: none;">
+        <h2>About Ethio Page Library</h2>
+        <p>
+            የ Ethio Page Library application የተለያዩ መጽሐፎችን ለማንበብ እና ለማህበረሰቡ ለማስተዋወቅ የተፈጠረ መድረክ ነው። ይህ application በኢትዮጵያ ውስጥ ያሉ ደራሲዎች፣ ተማሪዎች፣ እና መጽሐፍ ወዳድ ሰዎች ለመጽሐፍ ቅድሚያ የሚሰጡ ሰዎች በቀላሉ መጽሐፎችን ለማንበብ ያስችላቸዋል።
+        </p>
+        <p>
+            ዋና ዓላማችን የኢትዮጵያን የመጽሐፍ ባህል ማሳደግ እና ባህልን ማስተዋወቅ ነው። በዚህ ጣብያ ላይ የተለያዩ የመጽሐፍ ዝርያዎችን ማግኘት ይችላሉ፣ እንደ ሳይንስ፣ ስፖርት፣ አፈ ታሪክ፣ አጭር ታሪክ፣ እና ሌሎችም።
+        </p>
+        <h3>ᴅᴇᴠᴇʟᴏᴩᴇʀ</h3>
+        <p>
+            ᴍᴏʜᴀᴍᴍᴇᴅ ʙᴇᴅᴇᴡɪ
+        </p>
+        <h3>ለተጨማሪ መረጃ</h3>
+        <p>
+            ለተጨማሪ መረጃ ወይም ለጥያቄዎች በዚህ ኢሜይል ያግኙን፡ <a href="mailto:kalidmok12@gmail.com">kalidmok12@gmail.com</a>።
+        </p>
+        <p> Email:<a href="mailto:kalidmok12@gmail.com">kalidmok12@gmail.com</a> </p>
+        <p> telegram channel:<a href="https://t.me/ethiopagelibrary">t.me/ethiopagelibrary </a> </p>
+    </section>
+
+    <footer class="footer">
+        <div class="category-links">
+            <ul>
+                <li><a href="#" id="more-categories">ተጨማሪ ምድቦች</a></li>
+            </ul>
+        </div>
+        <p>&copy; 2025 Ethio Page Library. All rights reserved.</p>
+    </footer>
+
+    <div id="bookModal" class="modal">
+        <div class="modal-content">
+            <div class="password-prompt-content">
+                <button class="close" onclick="closeBookModal()" aria-label="Close">&times;</button>
+                <h2 id="modalTitle"></h2>
+                <img id="modalCover" src="" alt="Book Cover">
+                <p><strong id="modalCategory"></strong></p>
+                <p><strong id="modalAuthor"></strong></p>
+                <p><strong id="modalLanguage"></strong></p>
+                <p><strong id="modalPages"></strong></p>
+                <p id="modalDescription"></p>
+                <button onclick="viewBook()">View</button>
+                <button id="downloadBookButton" onclick="downloadBook()">Download</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="aiChatWindow" class="ai-chat-window hidden">
+        <div class="chat-header">
+            <h3>AI ረዳት</h3>
+            <button class="close-chat" onclick="toggleAIChat()">&times;</button>
+        </div>
+        <div id="chatOutput" class="chat-output">
+            <p class="ai-message"><strong>AI:</strong> እንዴት ልርዳዎት?</p>
+        </div>
+        <div class="chat-input-container">
+            <input type="text" id="userInput" placeholder="ጥያቄዎን ያስገቡ...">
+            <button onclick="submitQuery()">ላክ</button>
+        </div>
+    </div>
+
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const splashScreen = document.getElementById('splash-screen');
+        const homeSection = document.getElementById('home');
+
+        setTimeout(function() {
+            splashScreen.style.display = 'none';
+            homeSection.style.opacity = '1';
+            loadContent();
+        }, 3000);
+    });
+
+    const homeLink = document.getElementById("homeLink");
+    const settingsLink = document.getElementById("settingsLink");
+    const aboutLink = document.getElementById("aboutLink");
+    const homeSection = document.getElementById("home");
+    const settingsSection = document.getElementById("settings");
+    const aboutPageSection = document.getElementById("about-page");
+    const bookGroupsContainer = document.getElementById("bookGroupsContainer");
+    const originalBookListContainer = document.getElementById("originalBookList");
+    const noBookMessage = document.getElementById("noBookMessage");
+    const categorySelect = document.getElementById("categorySelect");
+    const searchInput = document.getElementById("searchInput");
+    const modal = document.getElementById("bookModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalCover = document.getElementById("modalCover");
+    const modalCategory = document.getElementById("modalCategory");
+    const modalAuthor = document.getElementById("modalAuthor");
+    const modalLanguage = document.getElementById("modalLanguage");
+    const modalPages = document.getElementById("modalPages");
+    const modalDescription = document.getElementById("modalDescription");
+    const closeModalButton = document.querySelector("#bookModal .close");
+    const categoryLinksContainer = document.querySelector('footer .category-links ul');
+    const searchResultsContainer = document.getElementById('searchResultsContainer');
+    const searchResultsList = document.getElementById('searchResultsList');
+    const noSearchResultMessage = document.getElementById('noSearchResultMessage');
+    let selectedBookIndex = null;
+    let currentDisplayedBooks = [];
+    const newArrivalsListContainer = document.querySelector('.new-arrivals-list');
+    const moreCategoriesLink = document.getElementById('more-categories');
+    const bookTitleMaxLength = 20;
+    let currentBookUrl = null;
+    const modalContent = document.querySelector('#bookModal .modal-content');
+    const advertisementsSection = document.getElementById('advertisements-section');
+    const advertisementsContainer = document.getElementById('advertisements-container');
+    const advertisementsDotsContainer = document.getElementById('advertisements-dots');
+    let currentAdIndex = 0;
+    let advertisementsData = [];
+    let adInterval;
+    const adDisplayTime = 5000; // 5 seconds
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    let allBooks = [];
+    
+    // 💡 AI Chatbot ተለዋዋጮች
+    const aiChatWindow = document.getElementById('aiChatWindow');
+    const userInput = document.getElementById('userInput');
+    const chatOutput = document.getElementById('chatOutput');
+    const aiButton = document.getElementById('aiButton');
+    
+    // 💡 AI Chatbot ተግባራት
+    function toggleAIChat() {
+        aiChatWindow.classList.toggle('hidden');
+        if (!aiChatWindow.classList.contains('hidden')) {
+            userInput.focus();
+        }
+    }
+
+    function submitQuery() {
+        const query = userInput.value.trim();
+        if (query === "") {
+            return;
+        }
+
+        // የተጠቃሚውን ጥያቄ አሳይ
+        chatOutput.innerHTML += `<p class="user-message"><strong>እርስዎ:</strong> ${query}</p>`;
+
+        // የ AIን ምላሽ አሳይ (ለሙከራ የሚሆን ቀላል ምላሽ)
+        const aiResponse = generateSimpleResponse(query);
+        
+        // ለጥያቄው መልስ እስኪገኝ ትንሽ ጊዜ ጠብቅ (እንደ AI ሂደት)
+        setTimeout(() => {
+            chatOutput.innerHTML += `<p class="ai-message"><strong>AI:</strong> ${aiResponse}</p>`;
+            // ወደታች በራስ-ሰር ይሸብልል
+            chatOutput.scrollTop = chatOutput.scrollHeight;
+        }, 500); // 0.5 ሰከንድ መዘግየት
+
+        // የተጠቃሚውን ጥያቄ አጽዳ
+        userInput.value = '';
+    }
+    
+    // ለጥያቄ ሲመልስ Enter ቁልፍ እንዲሰራ ማድረግ
+    userInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            submitQuery();
+        }
+    });
+    
+    function generateSimpleResponse(query) {
+        const lowerQuery = query.toLowerCase();
+
+        if (lowerQuery.includes("ስምህ") || lowerQuery.includes("ማን")) {
+            return "እኔ ለዚህ ድረ-ገጽ የተጨመርኩ ቀላል ረዳት ሞዴል ነኝ።";
+        } else if (lowerQuery.includes("ሠላም") || lowerQuery.includes("እንደምን")) {
+            return "ሰላም! በዚህ ቤተ-መጽሐፍት ውስጥ ስለ መጽሐፍት ወይም ስለ ድረ-ገጹ ምን ማወቅ ይፈልጋሉ?";
+        } else if (lowerQuery.includes("አመሰግናለሁ")) {
+            return "በደስታ! ሌላ ምን ልርዳዎት?";
+        } else if (lowerQuery.includes("መጽሐፍ") || lowerQuery.includes("ፈልግ")) {
+            return "መጽሐፍ ለመፈለግ እባክዎ ከላይ ያለውን የፍለጋ መስኩን ይጠቀሙ ወይም በምድብ ያጣሩ።";
+        } else {
+            return `ጥያቄዎን ('${query}') ተቀብያለሁ። ይህ ለጊዜው በቅድሚያ የተዘጋጀ ምላሽ ነው። እውነተኛ AI ለመጨመር የAPI ቁልፍ ያስፈልጋል።`;
+        }
+    }
+
+
+    function showSection(section) {
+        homeSection.style.display = "none";
+        settingsSection.style.display = "none";
+        aboutPageSection.style.display = "none";
+        searchResultsContainer.style.display = "none";
+        section.style.display = "block";
+    }
+
+    homeLink.addEventListener("click", function(event) {
+        event.preventDefault();
+        showSection(homeSection);
+        loadContent();
+    });
+
+    settingsLink.addEventListener("click", function(event) {
+        event.preventDefault();
+        showSection(settingsSection);
+    });
+
+    aboutLink.addEventListener("click", function(event) {
+        event.preventDefault();
+        showSection(aboutPageSection);
+    });
+
+    function renderBookList(books, container, isOriginalList = false) {
+        container.innerHTML = "";
+        if (books && books.length === 0) {
+            if (container.id === 'searchResultsList') {
+                noSearchResultMessage.style.display = "block";
+            } else if (container.parentElement.id === 'originalBookList') {
+                noBookMessage.style.display = "block";
+            }
+        } else if (books) {
+            noSearchResultMessage.style.display = "none";
+            noBookMessage.style.display = "none";
+
+            books.forEach((book, index) => {
+                const bookDiv = document.createElement("div");
+                if (isOriginalList) {
+                    bookDiv.className = "book-item-original";
+                    bookDiv.innerHTML = `
+                        <img src="${book.cover}" alt="Book Cover" onerror="this.onerror=null; this.src='empty-cover.png'">
+                        <h3>${book.name}</h3>
+                    `;
+                } else {
+                    bookDiv.className = "book-item";
+                    bookDiv.innerHTML = `
+                        <img src="${book.cover}" alt="Book Cover" onerror="this.onerror=null; this.src='empty-cover.png'">
+                        <div class="book-info">
+                            <h3>${book.name}</h3>
+                            <p>${book.category || ''}</p>
+                        </div>
+                    `;
+                }
+                bookDiv.addEventListener("click", () => openModal(index, books));
+                container.appendChild(bookDiv);
+            });
+        }
+        currentDisplayedBooks = books;
+    }
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function renderNewArrivals(books) {
+        newArrivalsListContainer.innerHTML = '';
+        const threeMonthsAgo = new Date();
+        threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+
+        const newBooks = books.filter(book => {
+            if (book.releaseDate) {
+                const releaseDate = new Date(book.releaseDate);
+                return releaseDate > threeMonthsAgo;
+            }
+            return false;
+        });
+
+        newBooks.forEach(book => {
+            const bookDiv = document.createElement("div");
+            bookDiv.className = "book";
+            const displayedTitle = book.name.length > bookTitleMaxLength ? book.name.substring(0, bookTitleMaxLength) + "..." : book.name;
+            bookDiv.innerHTML = `
+                <img src="${book.cover}" alt="New Book Cover" onerror="this.onerror=null; this.src='empty-cover.png'">
+                <h3>${displayedTitle}</h3>
+            `;
+            bookDiv.addEventListener("click", () => openModal(books.indexOf(book), books));
+            newArrivalsListContainer.appendChild(bookDiv);
+        });
+
+        const newBookSection = document.getElementById('new-arrivals');
+        if (newBooks.length === 0) {
+            newBookSection.style.display = 'none';
+        } else {
+            newBookSection.style.display = 'block';
+        }
+    }
+
+    function populateCategories(books) {
+        const categories = ["All", ...new Set(books.map(book => book.category))];
+        categorySelect.innerHTML = '';
+        categories.forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat.toLowerCase().replace(/ /g, '-');
+            option.textContent = cat;
+            categorySelect.appendChild(option);
+        });
+        populateFooterCategories(books, categories);
+    }
+
+    function populateFooterCategories(books, allCategories) {
+        categoryLinksContainer.innerHTML = '';
+        const visibleCount = 4;
+        const visibleCategories = allCategories.slice(0, visibleCount);
+        const hiddenCategories = allCategories.slice(visibleCount);
+
+        visibleCategories.forEach(category => {
+            const listItem = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = '#';
+            link.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+            link.setAttribute('data-category', category);
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                categorySelect.value = category.toLowerCase().replace(/ /g, '-');
+                filterByCategory();
+            });
+            listItem.appendChild(link);
+            categoryLinksContainer.appendChild(listItem);
+        });
+
+        if (hiddenCategories.length > 0) {
+            const moreLinkItem = document.createElement('li');
+            const moreLink = document.createElement('a');
+            moreLink.href = '#';
+            moreLink.id = 'more-categories';
+            const currentLanguage = localStorage.getItem('language') || 'en';
+            if (currentLanguage === 'en') {
+                moreLink.textContent = 'other';
+            } else if (currentLanguage === 'am') {
+                moreLink.textContent = 'ተጨማሪ';
+            } else {
+                moreLink.textContent = 'ተጨማሪ ምድቦች';
+            }
+            moreLinkItem.appendChild(moreLink);
+            categoryLinksContainer.appendChild(moreLinkItem);
+        } else if (moreCategoriesLink) {
+            moreCategoriesLink.style.display = 'none';
+        }
+    }
+
+    function filterByCategory() {
+        const selectedCategory = categorySelect.value;
+        showSection(searchResultsContainer);
+        searchInput.value = '';
+
+        if (selectedCategory === 'all') {
+            renderBookList(allBooks, searchResultsList);
+        } else {
+            const filteredBooks = allBooks.filter(book => book.category.toLowerCase().replace(/ /g, '-') === selectedCategory);
+            renderBookList(filteredBooks, searchResultsList);
+        }
+    }
+
+    function searchBooks() {
+        const searchTerm = searchInput.value.toLowerCase();
+        showSection(searchResultsContainer);
+        categorySelect.value = 'all';
+
+        const filteredBooks = allBooks.filter(book =>
+            book.name.toLowerCase().includes(searchTerm) ||
+            (book.author && book.author.toLowerCase().includes(searchTerm)) ||
+            (book.description && book.description.toLowerCase().includes(searchTerm)) ||
+            (book.category && book.category.toLowerCase().includes(searchTerm))
+        );
+        renderBookList(filteredBooks, searchResultsList);
+    }
+
+    function updateModalContent(lang) {
+        const modalCategoryLabel = document.getElementById('modalCategory');
+        const modalAuthorLabel = document.getElementById('modalAuthor');
+        const modalLanguageLabel = document.getElementById('modalLanguage');
+        const modalPagesLabel = document.getElementById('modalPages');
+        const viewButton = document.querySelector('.modal-content button:nth-last-child(2)');
+        const downloadButton = document.getElementById('downloadBookButton');
+
+        if (lang === 'am') {
+            if (modalCategoryLabel) modalCategoryLabel.innerHTML = `<strong>ምድብ:</strong> ${modalCategoryLabel.textContent.split(': ')[1] || ''}`;
+            if (modalAuthorLabel) modalAuthorLabel.innerHTML = `<strong>ደራሲ:</strong> ${modalAuthorLabel.textContent.split(': ')[1] || ''}`;
+            if (modalLanguageLabel) modalLanguageLabel.innerHTML = `<strong>ቋንቋ:</strong> ${modalLanguageLabel.textContent.split(': ')[1] || ''}`;
+            if (modalPagesLabel) modalPagesLabel.innerHTML = `<strong>ገጾች:</strong> ${modalPagesLabel.textContent.split(': ')[1] || ''}`;
+            if (viewButton) viewButton.textContent = 'ይመልከቱ';
+            if (downloadButton) downloadButton.textContent = 'አውርድ';
+        } else if (lang === 'en') {
+            if (modalCategoryLabel) modalCategoryLabel.innerHTML = `<strong>Category:</strong> ${modalCategoryLabel.textContent.split(': ')[1] || ''}`;
+            if (modalAuthorLabel) modalAuthorLabel.innerHTML = `<strong>Author:</strong> ${modalAuthorLabel.textContent.split(': ')[1] || ''}`;
+            if (modalLanguageLabel) modalLanguageLabel.innerHTML = `<strong>Language:</strong> ${modalLanguageLabel.textContent.split(': ')[1] || ''}`;
+            if (modalPagesLabel) modalPagesLabel.innerHTML = `<strong>Pages:</strong> ${modalPagesLabel.textContent.split(': ')[1] || ''}`;
+            if (viewButton) viewButton.textContent = 'View';
+            if (downloadButton) downloadButton.textContent = 'Download';
+        }
+    }
+
+    function openModal(index, books) {
+        selectedBookIndex = index;
+        const book = books[index];
+        modalTitle.textContent = book.name;
+        modalCover.src = book.cover;
+        modalCover.alt = book.name;
+        modalCategory.textContent = `Category: ${book.category.charAt(0).toUpperCase() + book.category.slice(1)}`;
+        modalAuthor.textContent = book.author ? `Author: ${book.author}` : '';
+        modalLanguage.textContent = book.language ? `Language: ${book.language}` : '';
+        modalPages.textContent = book.pages ? `Pages: ${book.pages}` : '';
+        modalDescription.textContent = book.description || 'No description available.';
+        currentBookUrl = book.file;
+        modal.style.display = "block";
+        updateModalContent(localStorage.getItem('language') || 'en');
+    }
+
+    function closeBookModal() {
+        modal.style.display = "none";
+        const existingIframe = modalContent.querySelector('iframe');
+        if (existingIframe) {
+            modalContent.removeChild(existingIframe);
+        }
+    }
+
+    function viewBook() {
+        if (currentBookUrl) {
+            window.open(currentBookUrl, '_blank');
+        }
+    }
+
+    function downloadBook() {
+        if (currentBookUrl) {
+            const link = document.createElement('a');
+            link.href = currentBookUrl;
+            link.download = modalTitle.textContent + '.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
+
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            closeBookModal();
+        }
+    }
+
+    function loadAdvertisements(ads) {
+        advertisementsContainer.innerHTML = '';
+        advertisementsDotsContainer.innerHTML = '';
+        advertisementsData = ads;
+
+        if (advertisementsData.length > 0) {
+            advertisementsSection.style.display = 'block';
+            advertisementsData.forEach((ad, index) => {
+                const img = document.createElement('img');
+                img.src = ad.link;
+                img.alt = `Advertisement ${index + 1}`;
+                advertisementsContainer.appendChild(img);
+
+                const dotContainer = document.createElement('div');
+                dotContainer.className = 'advertisement-bar-container';
+                const dot = document.createElement('div');
+                dot.className = 'advertisement-bar';
+                dotContainer.appendChild(dot);
+                dotContainer.addEventListener('click', () => showAd(index));
+                advertisementsDotsContainer.appendChild(dotContainer);
+            });
+
+            showAd(0);
+        } else {
+            advertisementsSection.style.display = 'none';
+        }
+    }
+
+    function showAd(index) {
+        currentAdIndex = index;
+        advertisementsContainer.style.transform = `translateX(-${index * 100}%)`;
+        updateBars();
+        resetAdRotation();
+    }
+
+    function nextAd() {
+        currentAdIndex = (currentAdIndex + 1) % advertisementsData.length;
+        advertisementsContainer.style.transform = `translateX(-${currentAdIndex * 100}%)`;
+        updateBars();
+    }
+
+    function prevAd() {
+        currentAdIndex = (currentAdIndex - 1 + advertisementsData.length) % advertisementsData.length;
+        advertisementsContainer.style.transform = `translateX(-${currentAdIndex * 100}%)`;
+        updateBars();
+    }
+
+    function updateBars() {
+        const bars = advertisementsDotsContainer.querySelectorAll('.advertisement-bar');
+        bars.forEach((bar, index) => {
+            bar.style.animation = 'none'; // Reset animation
+            void bar.offsetWidth; // Trigger reflow
+            if (index === currentAdIndex) {
+                bar.style.animation = `fillBar ${adDisplayTime / 1000}s linear forwards`;
+            } else {
+                bar.style.width = '0%';
+            }
+        });
+    }
+
+    function startAdRotation() {
+        adInterval = setInterval(() => {
+            nextAd();
+            updateBars();
+        }, adDisplayTime);
+    }
+
+    function resetAdRotation() {
+        clearInterval(adInterval);
+        if (advertisementsData.length > 1) {
+            startAdRotation();
+        }
+    }
+
+    advertisementsSection.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        clearInterval(adInterval);
+    });
+
+    advertisementsSection.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+        resetAdRotation();
+    });
+
+    function handleSwipe() {
+        if (touchEndX < touchStartX) {
+            nextAd();
+        } else if (touchEndX > touchStartX) {
+            prevAd();
+        }
+    }
+
+    function loadContent(selectedCategory) {
+        fetch('books.json')
+            .then(response => response.json())
+            .then(data => {
+                bookGroupsContainer.innerHTML = '';
+                originalBookListContainer.innerHTML = '';
+                searchResultsContainer.style.display = 'none';
+                
+                allBooks = data.books || [];
+
+                // Group books by title
+                const groupedBooks = allBooks.reduce((acc, book) => {
+                    const groupTitle = book.title || 'Other Books';
+                    if (!acc[groupTitle]) {
+                        acc[groupTitle] = [];
+                    }
+                    acc[groupTitle].push(book);
+                    return acc;
+                }, {});
+
+                // Render grouped books
+                for (const title in groupedBooks) {
+                    const group = groupedBooks[title];
+                    const bookListContainer = document.createElement('div');
+                    bookListContainer.className = 'book-list-group';
+                    bookListContainer.innerHTML = `<h2>${title}</h2><div class="book-list"></div>`;
+                    const bookListInnerContainer = bookListContainer.querySelector('.book-list');
+                    renderBookList(group, bookListInnerContainer);
+                    bookGroupsContainer.appendChild(bookListContainer);
+                }
+
+                // Render all books in the 'other books' section
+                const allBooksForOther = [...allBooks];
+                const originalBookListTitle = document.createElement('h2');
+                originalBookListTitle.textContent = 'Other Books';
+                originalBookListContainer.appendChild(originalBookListTitle);
+                renderBookList(allBooksForOther, originalBookListContainer, true);
+
+                if (data.advertisements) {
+                    loadAdvertisements(data.advertisements);
+                }
+
+                renderNewArrivals(allBooks);
+                populateCategories(allBooks);
+
+                if (allBooks.length === 0) {
+                    noBookMessage.style.display = "block";
+                } else {
+                    noBookMessage.style.display = "none";
+                }
+            })
+            .catch(error => {
+                console.error('Error loading content:', error);
+                noBookMessage.style.display = "block";
+            });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeSelect = document.getElementById('theme');
+        const languageSelect = document.getElementById('language');
+        const fontSizeSelect = document.getElementById('fontSize');
+        const fontFamilySelect = document.getElementById('fontFamily');
+        const body = document.body;
+        const header = document.querySelector('header');
+        const searchInputEl = document.querySelector('#searchInput');
+        const searchButton = document.querySelector('.search-bar button');
+        const categoryFilterSelect = document.querySelector('.category-filter select');
+        const sectionElements = document.querySelectorAll('section');
+        const bookList = document.querySelector('.book-list');
+        const bookModalContent = document.querySelector('.modal-content');
+        const modalTitleElement = document.querySelector('.modal-content h2');
+        const modalStrongElements = document.querySelectorAll('.modal-content strong');
+        const modalParagraphElements = document.querySelectorAll('.modal-content p');
+        const modalButtonElements = document.querySelectorAll('.modal-content button');
+        const settingsSectionEl = document.getElementById('settings');
+        const settingsLabels = settingsSectionEl.querySelectorAll('label');
+        const settingsSelects = settingsSectionEl.querySelectorAll('select');
+        const footerEl = document.querySelector('footer');
+        const noBookMessageEl = document.getElementById('noBookMessage');
+        const aboutPageSectionEl = document.getElementById('about-page');
+        const moreCategoriesLink = document.getElementById('more-categories');
+        const newArrivalsSection = document.getElementById('new-arrivals');
+        const newArrivalsList = document.querySelector('.new-arrivals-list');
+        const originalBookListContainer = document.getElementById('originalBookList');
+        const advertisementsSection = document.getElementById('advertisements-section');
+        const searchContainer = document.querySelector('.search-container');
+
+
+        function updateTheme(theme) {
+            const elements = [body, header, searchInputEl, searchButton, categoryFilterSelect, footerEl, noBookMessageEl, settingsSectionEl, aboutPageSectionEl, newArrivalsSection, newArrivalsList, advertisementsSection, searchContainer, bookModalContent];
+            const allSections = document.querySelectorAll('section');
+
+            const isDarkMode = (theme === 'dark') || (theme === 'auto' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+            elements.forEach(el => el && el.classList.toggle('dark-mode', isDarkMode));
+            allSections.forEach(sec => sec.classList.toggle('dark-mode', isDarkMode));
+
+            const originalBookItems = originalBookListContainer.querySelectorAll('.book-item-original');
+            originalBookItems.forEach(item => item.classList.toggle('dark-mode', isDarkMode));
+
+            const newArrivalsBooks = newArrivalsList.querySelectorAll('.book');
+            newArrivalsBooks.forEach(book => book.classList.toggle('dark-mode', isDarkMode));
+
+            const newArrivalsBookTitles = newArrivalsList.querySelectorAll('.book h3');
+            newArrivalsBookTitles.forEach(title => title.classList.toggle('dark-mode', isDarkMode));
+
+            const bookItems = document.querySelectorAll('.book-item');
+            bookItems.forEach(item => item.classList.toggle('dark-mode', isDarkMode));
+
+            const bookTitles = document.querySelectorAll('.book-item h3');
+            bookTitles.forEach(title => title.classList.toggle('dark-mode', isDarkMode));
+            
+            const bookDescriptions = document.querySelectorAll('.book-item p');
+            bookDescriptions.forEach(desc => desc.classList.toggle('dark-mode', isDarkMode));
+
+            const modalElements = [modalTitleElement, ...modalStrongElements, ...modalParagraphElements, ...modalButtonElements];
+            modalElements.forEach(el => el && el.classList.toggle('dark-mode', isDarkMode));
+            
+            const settingsLabelsAndSelects = [...settingsLabels, ...settingsSelects];
+            settingsLabelsAndSelects.forEach(el => el.classList.toggle('dark-mode', isDarkMode));
+
+            localStorage.setItem('theme', theme);
+        }
+
+        function updateLanguage(lang) {
+            body.classList.remove('amharic', 'english');
+            if (lang === 'am') {
+                body.classList.add('amharic');
+                document.getElementById('homeLink').textContent = 'ቤት';
+                document.getElementById('settingsLink').textContent = 'ቅንብሮች';
+                document.getElementById('aboutLink').textContent = 'ስለ እኛ';
+                document.querySelector('header h1').textContent = 'ኢትዮ ፔጅ ላይብረሪ';
+                document.querySelector('#searchInput').placeholder = 'መጽሐፍ ይፈልጉ...';
+                document.querySelector('.search-bar button').textContent = 'ፈልግ';
+                document.querySelector('.category-filter label').textContent = 'በምድብ አጣራ:';
+                document.querySelector('.category-filter select option:first-child').textContent = 'ሁሉም';
+                if (document.querySelector('#advertisements-section h2')) document.querySelector('#advertisements-section h2').textContent = 'ማስታወቂያ';
+                if (document.querySelector('#new-arrivals h2')) document.querySelector('#new-arrivals h2').innerHTML = '&#10094; አዲስ መጽሐፍ &#10095;';
+                document.querySelector('#settings h2').textContent = 'ቅንብሮች';
+                document.querySelector('#settings div:nth-child(1) label').textContent = 'ገጽታ:';
+                document.querySelector('#settings div:nth-child(1) select option:nth-child(1)').textContent = 'የብርሃን ሁነታ';
+                document.querySelector('#settings div:nth-child(1) select option:nth-child(2)').textContent = 'የጨለማ ሁነታ';
+                document.querySelector('#settings div:nth-child(1) select option:nth-child(3)').textContent = 'ራስ-ሰር ሁነታ';
+                document.querySelector('#settings div:nth-child(2) label').textContent = 'ቋንቋ:';
+                document.querySelector('#settings div:nth-child(2) select option:nth-child(1)').textContent = 'አማርኛ';
+                document.querySelector('#settings div:nth-child(2) select option:nth-child(2)').textContent = 'እንግሊዝኛ';
+                document.querySelector('#settings div:nth-child(3) label').textContent = 'የቅርጸ-ቁምፊ መጠን:';
+                document.querySelector('#settings div:nth-child(3) select option:nth-child(1)').textContent = 'ትንሽ';
+                document.querySelector('#settings div:nth-child(3) select option:nth-child(2)').textContent = 'መካከለኛ';
+                document.querySelector('#settings div:nth-child(3) select option:nth-child(3)').textContent = 'ትልቅ';
+                document.querySelector('#settings div:nth-child(4) label').textContent = 'የቅርጸ-ቁምፊ አይነት:';
+                document.querySelector('#settings div:nth-child(4) select option:nth-child(1)').textContent = 'አሪያል';
+                document.querySelector('#settings div:nth-child(4) select option:nth-child(2)').textContent = 'ታይምስ ኒው ሮማን';
+                document.querySelector('#settings div:nth-child(4) select option:nth-child(3)').textContent = 'ሲጎ ዩአይ';
+                document.querySelector('#about-page h2').textContent = 'ስለ ኢትዮ ገጽ ቤተ-መጽሐፍት';
+                document.querySelector('#about-page h3:nth-child(3)').textContent = 'የጣብያው ባለቤት';
+                document.querySelector('#about-page h3:nth-child(5)').textContent = 'ለተጨማሪ መረጃ';
+                document.querySelector('footer p').textContent = '© 2025 የኢትዮ ገጽ ቤተ-መጽሐፍት. መብቱ በህግ የተጠበቀ ነው።';
+                if (document.querySelector('#noBookMessage')) document.querySelector('#noBookMessage').textContent = 'ምንም መጽሐፍ የለም';
+                if (document.querySelector('#noSearchResultMessage')) document.querySelector('#noSearchResultMessage').textContent = 'ምንም ውጤት አልተገኘም';
+                if (document.querySelector('#searchResultsContainer h2')) document.querySelector('#searchResultsContainer h2').textContent = 'የፍለጋ ውጤቶች';
+                if (document.querySelector('#originalBookList h2')) document.querySelector('#originalBookList h2').textContent = 'ሌሎች መጽሐፍት';
+                if (document.querySelector('.modal-content')) {
+                    const modalCategoryLabel = document.getElementById('modalCategory');
+                    const modalAuthorLabel = document.getElementById('modalAuthor');
+                    const modalLanguageLabel = document.getElementById('modalLanguage');
+                    const modalPagesLabel = document.getElementById('modalPages');
+                    const viewButton = document.querySelector('.modal-content button:nth-last-child(2)');
+                    const downloadButton = document.getElementById('downloadBookButton');
+
+                    const updateModalText = () => {
+                        if (modalCategoryLabel && modalCategoryLabel.textContent.includes('Category:')) {
+                            const categoryValue = modalCategoryLabel.textContent.split(': ')[1];
+                            modalCategoryLabel.innerHTML = `<strong>ምድብ:</strong> ${categoryValue}`;
+                        }
+                        if (modalAuthorLabel && modalAuthorLabel.textContent.includes('Author:')) {
+                            const authorValue = modalAuthorLabel.textContent.split(': ')[1];
+                            modalAuthorLabel.innerHTML = `<strong>ደራሲ:</strong> ${authorValue}`;
+                        }
+                        if (modalLanguageLabel && modalLanguageLabel.textContent.includes('Language:')) {
+                            const languageValue = modalLanguageLabel.textContent.split(': ')[1];
+                            modalLanguageLabel.innerHTML = `<strong>ቋንቋ:</strong> ${languageValue}`;
+                        }
+                        if (modalPagesLabel && modalPagesLabel.textContent.includes('Pages:')) {
+                            const pagesValue = modalPagesLabel.textContent.split(': ')[1];
+                            modalPagesLabel.innerHTML = `<strong>ገጾች:</strong> ${pagesValue}`;
+                        }
+                        if (viewButton) {
+                            viewButton.textContent = 'ይመልከቱ';
+                        }
+                        if (downloadButton) {
+                            downloadButton.textContent = 'አውርድ';
+                        }
+                    };
+                    
+                    const observer = new MutationObserver(updateModalText);
+                    const config = { childList: true, subtree: true, characterData: true };
+                    observer.observe(modalContent, config);
+                    updateModalText();
+                }
+                if (moreCategoriesLink) {
+                    moreCategoriesLink.textContent = 'ተጨማሪ';
+                }
+            } else if (lang === 'en') {
+                body.classList.add('english');
+                document.getElementById('homeLink').textContent = 'Home';
+                document.getElementById('settingsLink').textContent = 'Settings';
+                document.getElementById('aboutLink').textContent = 'About';
+                document.querySelector('header h1').textContent = 'Ethio Page Library';
+                document.querySelector('#searchInput').placeholder = 'Search books...';
+                document.querySelector('.search-bar button').textContent = 'Search';
+                document.querySelector('.category-filter label').textContent = 'Filter by Category:';
+                document.querySelector('.category-filter select option:first-child').textContent = 'All';
+                if (document.querySelector('#advertisements-section h2')) document.querySelector('#advertisements-section h2').textContent = 'Advertisement';
+                if (document.querySelector('#new-arrivals h2')) document.querySelector('#new-arrivals h2').innerHTML = '&#10094; New Book &#10095;';
+                document.querySelector('#settings h2').textContent = 'Settings';
+                document.querySelector('#settings div:nth-child(1) label').textContent = 'Theme:';
+                document.querySelector('#settings div:nth-child(1) select option:nth-child(1)').textContent = 'Light Mode';
+                document.querySelector('#settings div:nth-child(1) select option:nth-child(2)').textContent = 'Dark Mode';
+                document.querySelector('#settings div:nth-child(1) select option:nth-child(3)').textContent = 'Auto Mode';
+                document.querySelector('#settings div:nth-child(2) label').textContent = 'Language:';
+                document.querySelector('#settings div:nth-child(2) select option:nth-child(1)').textContent = 'Amharic';
+                document.querySelector('#settings div:nth-child(2) select option:nth-child(2)').textContent = 'English';
+                document.querySelector('#settings div:nth-child(3) label').textContent = 'Font Size:';
+                document.querySelector('#settings div:nth-child(3) select option:nth-child(1)').textContent = 'Small';
+                document.querySelector('#settings div:nth-child(3) select option:nth-child(2)').textContent = 'Medium';
+                document.querySelector('#settings div:nth-child(3) select option:nth-child(3)').textContent = 'Large';
+                document.querySelector('#settings div:nth-child(4) label').textContent = 'Font Family:';
+                document.querySelector('#settings div:nth-child(4) select option:nth-child(1)').textContent = 'Arial';
+                document.querySelector('#settings div:nth-child(4) select option:nth-child(2)').textContent = 'Times New Roman';
+                document.querySelector('#settings div:nth-child(4) select option:nth-child(3)').textContent = 'Segoe UI';
+                document.querySelector('#about-page h2').textContent = 'About Ethio Page Library';
+                document.querySelector('#about-page h3:nth-child(3)').textContent = 'Owner of the Site';
+                document.querySelector('#about-page h3:nth-child(5)').textContent = 'For More Information';
+                document.querySelector('footer p').textContent = '&copy; 2025 Ethio Page Library. All rights reserved.';
+                if (document.querySelector('#noBookMessage')) document.querySelector('#noBookMessage').textContent = 'No Book';
+                if (document.querySelector('#noSearchResultMessage')) document.querySelector('#noSearchResultMessage').textContent = 'No results found.';
+                if (document.querySelector('#searchResultsContainer h2')) document.querySelector('#searchResultsContainer h2').textContent = 'Search Results';
+                if (document.querySelector('#originalBookList h2')) document.querySelector('#originalBookList h2').textContent = 'Other Books';
+                if (document.querySelector('.modal-content')) {
+                    const viewButton = document.querySelector('.modal-content button:nth-last-child(2)');
+                    const downloadButton = document.getElementById('downloadBookButton');
+                    if (viewButton) {
+                        viewButton.textContent = 'View';
+                    }
+                    if (downloadButton) {
+                        downloadButton.textContent = 'Download';
+                    }
+                }
+                if (moreCategoriesLink) {
+                    moreCategoriesLink.textContent = 'more';
+                }
+            }
+            localStorage.setItem('language', lang);
+        }
+
+        function updateFontSize(size) {
+            body.style.fontSize = size;
+            localStorage.setItem('fontSize', size);
+        }
+
+        function updateFontFamily(family) {
+            body.style.fontFamily = family;
+            localStorage.setItem('fontFamily', family);
+        }
+
+        themeSelect.addEventListener('change', (event) => updateTheme(event.target.value));
+        languageSelect.addEventListener('change', (event) => updateLanguage(event.target.value));
+        fontSizeSelect.addEventListener('change', (event) => updateFontSize(event.target.value));
+        fontFamilySelect.addEventListener('change', (event) => updateFontFamily(event.target.value));
+
+        loadContent();
+
+        showSection(homeSection);
+        const initialTheme = localStorage.getItem('theme') || 'auto';
+        updateTheme(initialTheme);
+
+        const initialLanguage = 'en';
+        updateLanguage(initialLanguage);
+        languageSelect.value = initialLanguage;
+
+        const initialFontSize = localStorage.getItem('fontSize') || '16px';
+        updateFontSize(initialFontSize);
+
+        const initialFontFamily = localStorage.getItem('fontFamily') || 'Arial, sans-serif';
+        updateFontFamily(initialFontFamily);
+
+
+        if (moreCategoriesLink) {
+            moreCategoriesLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                fetch('books.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        const allBooks = data.books || [];
+                        populateFooterCategories(allBooks, ["All", ...new Set(allBooks.map(book => book.category))]);
+                        const moreLink = document.getElementById('more-categories');
+                        if (moreLink) {
+                            moreLink.style.display = 'none';
+                        }
+                    })
+                    .catch(error => console.error('Error loading books for categories:', error));
+            });
+        }
+    });
+</script>
+</html>
