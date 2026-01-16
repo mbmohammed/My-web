@@ -1,0 +1,134 @@
+{
+  "books": [
+    {
+      "name": "the advancher of love",
+      "author": "አበባ በላይ",
+      "language": "amharic",
+      "pages": 280,
+      "category": "romance",
+      "cover": "https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?auto=format&fit=crop&q=80&w=400&h=600",
+      "file": "https://www.africabib.org/african-bookshelf/images/PDFs/Afr/Hab1980.pdf",
+      "description": "ልብን የሚነካ የፍቅር ታሪክ.",
+      "releaseDate": "2024-11-01",
+      "title": "Available Books"
+    },
+    {
+      "name": "the time",
+      "author": "mb",
+      "language": "amharic",
+      "pages": 150,
+      "category": "fiction",
+      "cover": "https://images.unsplash.com/photo-1501139083538-0139583c060f?auto=format&fit=crop&q=80&w=400&h=600",
+      "file": "#",
+      "description": "",
+      "releaseDate": "2025-05-15",
+      "title": "Available Books"
+    },
+    {
+      "name": "the fix",
+      "author": "Muhammed",
+      "language": "amharic",
+      "pages": null,
+      "category": "fiction",
+      "cover": "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80&w=400&h=600",
+      "file": "",
+      "description": "ምግብና መጠጥ ነክ መመሪያዎች",
+      "releaseDate": "2025-05-24",
+      "localFileName": "",
+      "groupAssignment": "Food and Drink",
+      "title": "Available Books"
+    },
+    {
+      "name": "የልጆች ታሪክ 1",
+      "author": "ደራሲ 6",
+      "language": "amharic",
+      "pages": 50,
+      "category": "children's-books",
+      "cover": "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&q=80&w=400&h=600",
+      "file": "#",
+      "description": "ለልጆች የሚሆን አጭር ታሪክ.",
+      "releaseDate": "2025-01-10",
+      "title": "Kids Books"
+    },
+    {
+      "name": "Kids Story2",
+      "author": "Author 7",
+      "language": "english",
+      "pages": 60,
+      "category": "children's-books",
+      "cover": "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=400&h=600",
+      "file": "#",
+      "description": "Another short story for children.",
+      "releaseDate": "2024-12-01",
+      "title": "Kids Books"
+    },
+    {
+      "name": "የምግብ አሰራር 1",
+      "author": "ሼፍ 1",
+      "language": "amharic",
+      "pages": 120,
+      "category": "food-drink",
+      "cover": "https://images.unsplash.com/photo-1505935428862-770b6f24f629?auto=format&fit=crop&q=80&w=400&h=600",
+      "file": "#",
+      "description": "ጣፋጭ የምግብ አሰራር መመሪያ.",
+      "releaseDate": "2025-03-01",
+      "title": "Food and Drink"
+    },
+    {
+      "name": "Computer science",
+      "author": "mohammed",
+      "language": "amharic",
+      "pages": 200,
+      "category": "computing-internet",
+      "cover": "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&q=80&w=400&h=600",
+      "file": "pd.pdf",
+      "description": "Computer science principles and algorithms.",
+      "releaseDate": "2024-01-01"
+    },
+    {
+      "name": "Book for kids",
+      "author": "Muhammed",
+      "language": "english",
+      "pages": 220,
+      "category": "children's-books",
+      "cover": "https://images.unsplash.com/photo-1535310101918-a3f1207e40e6?auto=format&fit=crop&q=80&w=400&h=600",
+      "file": "",
+      "description": "For kids educational purposes",
+      "releaseDate": "2025-05-24",
+      "localFileName": "➫e.p.pdf",
+      "groupAssignment": null,
+      "title": "Kids Books"
+    },
+    {
+      "name": "in side",
+      "author": "Author 5",
+      "language": "english",
+      "pages": 250,
+      "category": "other",
+      "cover": "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&q=80&w=400&h=600",
+      "file": "https://file-to-link-nx-44aac58bff1f.herokuapp.com/dl/68318c59878116486b5dbe15",
+      "description": "An insightful look into internal systems.",
+      "releaseDate": "2024-03-15"
+    }
+  ],
+  "advertisements": [
+    {
+      "type": "png",
+      "link": "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&q=80&w=1280&h=500",
+      "startDate": "2025-05-18",
+      "endDate": "2025-05-31"
+    },
+    {
+      "type": "jpg",
+      "link": "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=1280&h=500",
+      "startDate": "2025-05-18",
+      "endDate": "2025-05-31"
+    },
+    {
+      "type": "png",
+      "link": "https://images.unsplash.com/photo-1491843384427-a16002f92f23?auto=format&fit=crop&q=80&w=1280&h=500",
+      "startDate": "2025-05-18",
+      "endDate": "2025-05-31"
+    }
+  ]
+}
